@@ -20,3 +20,23 @@ model User {
   password  String
   createdAt DateTime @default(now())
 }
+
+model Products {
+  id              Int             @id @default(autoincrement())
+  Productname     String
+  Price           Int
+  Description     String
+  Brand           String
+  Storagecapacity String
+  Colors          String
+  Category        String
+  Stock           Int
+  Images          ProductImages[]
+}
+
+model ProductImages {
+  id         Int       @id @default(autoincrement())
+  productId  Int
+  Image      String
+  Products   Products? @relation(fields: [productId], references: [id])
+}

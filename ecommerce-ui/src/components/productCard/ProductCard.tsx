@@ -1,7 +1,10 @@
 import { Box, Button } from "@mui/material";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
+import { ProductCardProps} from "../../Interfaces/interface";
 
-function ProductCard() {
+function ProductCard({product}: ProductCardProps) {
+  console.log(product?.Images[0].Image, "ccccccc");
+
   return (
     <>
       <Box
@@ -12,7 +15,8 @@ function ProductCard() {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          borderRadius:"9px"
+          borderRadius: "9px",
+          cursor:"pointer"
         }}
       >
         <Box
@@ -26,7 +30,7 @@ function ProductCard() {
             fontSize="large"
             sx={{
               marginTop: "30px",
-              marginRight: "10px",
+              marginRight: "25px",
               color: "#909090",
               marginBottom: "20px",
             }}
@@ -41,16 +45,19 @@ function ProductCard() {
             justifyContent: "center",
           }}
         >
-          <img style={{}} src="public/iphone 14 pro 1.png" alt="" />
+          <img style={{width:"100%",height:"170px"}} src={product?.Images[0].Image} alt="" />
+          {/* <img style={{}} src="/public/iphone 14 pro 1.png" alt="" /> */}
         </Box>
         <Box
           sx={{
             width: "80%",
             textAlign: "center",
-            marginTop:"20px"
+            marginTop: "20px",
           }}
         >
-          <p style={{fontSize:"20px",fontWeight:"-moz-initial"}}>Apple iPhone 14 Pro Max 128GB Deep Purple </p>
+          <p style={{ fontSize: "20px", fontWeight: "-moz-initial" }}>
+            {product?.Productname}{" "}
+          </p>
           <h2 style={{ margin: "10px", padding: "0" }}>$900</h2>
           <Button
             sx={{

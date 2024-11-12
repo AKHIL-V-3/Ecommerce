@@ -1,7 +1,21 @@
 import { Box, Button } from "@mui/material";
 import ProductCard from "../components/productCard/ProductCard";
+import { useEffect, useState } from "react";
+import { getAllProducts } from "../apis/apis";
+import { IProduct } from "../Interfaces/interface";
 
 function HomeBody() {
+  const [products, setProducts] = useState<IProduct[]>([]);
+  useEffect(() => {
+    async function getProducts() {
+      const response = await getAllProducts();
+      console.log(response.data, "3333");
+      setProducts(response.data);
+    }
+    getProducts();
+  }, []);
+  console.log(products, "ppppp");
+
   return (
     <>
       <Box
@@ -24,15 +38,21 @@ function HomeBody() {
               display: "flex",
               gap: "20px",
               fontSize: "23px",
-              marginTop:"20px",
-              marginBottom:"20px"
+              marginTop: "20px",
+              marginBottom: "20px",
             }}
           >
-            <p style={{ borderBottom: "2px solid", padding: "0px", margin:"0" }}>
+            <p
+              style={{ borderBottom: "2px solid", padding: "0px", margin: "0" }}
+            >
               New Arrival
             </p>
-            <p style={{ color: "#8B8B8B",padding:"0",margin:"0" }}>Bestseller</p>
-            <p style={{ color: "#8B8B8B",padding:"0",margin:"0" }}>Featured Products</p>
+            <p style={{ color: "#8B8B8B", padding: "0", margin: "0" }}>
+              Bestseller
+            </p>
+            <p style={{ color: "#8B8B8B", padding: "0", margin: "0" }}>
+              Featured Products
+            </p>
           </Box>
 
           <Box
@@ -45,14 +65,17 @@ function HomeBody() {
               gap: "10px",
             }}
           >
+            {products.map((product, index) => {
+              return <ProductCard key={index} product={product} />;
+            })}
+
+            {/* <ProductCard />
             <ProductCard />
             <ProductCard />
             <ProductCard />
             <ProductCard />
             <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
+            <ProductCard /> */}
           </Box>
         </Box>
       </Box>
@@ -109,16 +132,18 @@ function HomeBody() {
           </Box>
 
           <Box
-           sx={{
-             width:"90%",
-             display:'flex',
-             flexDirection:"column",
-             gap:"16px",
-             marginTop:"20px"
-           }}
+            sx={{
+              width: "90%",
+              display: "flex",
+              flexDirection: "column",
+              gap: "16px",
+              marginTop: "20px",
+            }}
           >
-            <h1 style={{ fontSize: "35px",margin:"0",padding:"0"}}>Popular Products</h1>
-            <p style={{ color: "#909090", }}>
+            <h1 style={{ fontSize: "35px", margin: "0", padding: "0" }}>
+              Popular Products
+            </h1>
+            <p style={{ color: "#909090" }}>
               iPad combines a magnificent 10.2-inch Retina display, incredible
               performance, multitasking and ease of use.
             </p>
@@ -165,14 +190,16 @@ function HomeBody() {
 
           <Box
             sx={{
-              width:"90%",
-              display:'flex',
-              flexDirection:"column",
-              gap:"16px",
-              marginTop:"20px"
+              width: "90%",
+              display: "flex",
+              flexDirection: "column",
+              gap: "16px",
+              marginTop: "20px",
             }}
           >
-            <h1 style={{ fontSize: "35px",margin:"0",padding:"0" }}>Ipad Pro</h1>
+            <h1 style={{ fontSize: "35px", margin: "0", padding: "0" }}>
+              Ipad Pro
+            </h1>
             <p style={{ color: "#909090" }}>
               iPad combines a magnificent 10.2-inch Retina display, incredible
               performance, multitasking and ease of use.
@@ -219,16 +246,18 @@ function HomeBody() {
           </Box>
 
           <Box
-           sx={{
-            width:"90%",
-            display:'flex',
-            flexDirection:"column",
-            gap:"16px",
-            marginTop:"20px"
-          }}
+            sx={{
+              width: "90%",
+              display: "flex",
+              flexDirection: "column",
+              gap: "16px",
+              marginTop: "20px",
+            }}
           >
-            <h1 style={{ fontSize: "35px",margin:"0",padding:"0" }}>Samsung Galaxy</h1>
-            <p style={{ color: "#909090"}}>
+            <h1 style={{ fontSize: "35px", margin: "0", padding: "0" }}>
+              Samsung Galaxy
+            </h1>
+            <p style={{ color: "#909090" }}>
               iPad combines a magnificent 10.2-inch Retina display, incredible
               performance, multitasking and ease of use.
             </p>
@@ -276,15 +305,17 @@ function HomeBody() {
 
           <Box
             sx={{
-              width:"90%",
-              display:'flex',
-              flexDirection:"column",
-              gap:"16px",
-              marginTop:"20px"
+              width: "90%",
+              display: "flex",
+              flexDirection: "column",
+              gap: "16px",
+              marginTop: "20px",
             }}
           >
-            <h1 style={{ fontSize: "35px",margin:"0",padding:"0" }}>Macbook Pro</h1>
-            <p style={{ color: "#909090"}}>
+            <h1 style={{ fontSize: "35px", margin: "0", padding: "0" }}>
+              Macbook Pro
+            </h1>
+            <p style={{ color: "#909090" }}>
               iPad combines a magnificent 10.2-inch Retina display, incredible
               performance, multitasking and ease of use.
             </p>
@@ -321,7 +352,7 @@ function HomeBody() {
             width: "80%",
           }}
         >
-          <h1 style={{marginBottom:"20px"}}>Discounts up to -50%</h1>
+          <h1 style={{ marginBottom: "20px" }}>Discounts up to -50%</h1>
 
           <Box
             sx={{
@@ -340,9 +371,9 @@ function HomeBody() {
       <Box
         sx={{
           width: "100%",
-          marginTop:"30px",
-          marginBottom:"0",
-          paddingBottom:"0",
+          marginTop: "30px",
+          marginBottom: "0",
+          paddingBottom: "0",
         }}
       >
         <img style={{ width: "100%" }} src="/banner 2.png" alt="" />

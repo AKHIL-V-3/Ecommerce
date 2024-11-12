@@ -4,6 +4,7 @@ import Homepage from "./pages/homepage";
 import SignInPage from "./pages/signinpage";
 import Textfieldtest from "./pages/textfieldtest";
 import SignUpPage from "./pages/signuppage";
+import ProductSinglePage from "./pages/productsinglepage";
 
 const router = createBrowserRouter([
   {
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
   {
     path: "/register",
     element: <SignUpPage />,
+  },
+  {
+    path: "/productdetails",
+    element: <ProductSinglePage />,
   },
   {
     path: "/test",
