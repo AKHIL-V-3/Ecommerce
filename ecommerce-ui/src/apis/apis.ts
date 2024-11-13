@@ -13,3 +13,7 @@ export const signInUser = async (user: IsignInUser): Promise<AxiosResponse> => {
 export const getAllProducts = async (): Promise<AxiosResponse> => {
   return await api.get("/api/product/getall_products");
 };
+
+export const getProductDetails = async (productId:number | string): Promise<AxiosResponse> => {
+   return await api.get(`/api/product/${productId}`)
+}

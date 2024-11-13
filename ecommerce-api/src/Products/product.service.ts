@@ -23,7 +23,6 @@ export class ProductService {
           },
         },
       });
-      console.log(response);
       return response;
     } catch (err) {
       console.log(err);
@@ -37,7 +36,6 @@ export class ProductService {
           Images: true,
         },
       });
-      console.log(products);
       return products;
     } catch (err) {
       console.log(err);

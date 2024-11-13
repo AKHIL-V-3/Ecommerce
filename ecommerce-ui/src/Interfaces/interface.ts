@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 export interface Iuser {
   username: string;
   email: string;
@@ -37,4 +39,8 @@ export interface ReviewProps {
   name: string;
   image: string;
   message: string;
+}
+
+export interface ScrollToTopProps {
+  children: ReactNode;
 }

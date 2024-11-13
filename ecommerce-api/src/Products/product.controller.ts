@@ -19,14 +19,12 @@ export class ProductController {
   @Post('product/add_product')
   async addNewProduct(@Body() product: createProductDto, @Res() res: Response) {
     const response = await this.productService.AddProduct(product);
-    console.log(response);
     res.status(200).json(response);
   }
 
   @Get('product/getall_products')
   async allProducts(@Res() res: Response) {
     const response = await this.productService.getAllProducts();
-    console.log(response);
     res.status(200).json(response);
   }
 
@@ -37,6 +35,7 @@ export class ProductController {
     @Res() res: Response,
   ) {
     const response = await this.productService.getProductById(productId);
+    console.log(response);
     res.status(200).json(response);
   }
 }

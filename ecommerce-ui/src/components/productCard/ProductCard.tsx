@@ -1,13 +1,19 @@
 import { Box, Button } from "@mui/material";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
-import { ProductCardProps} from "../../Interfaces/interface";
+import { ProductCardProps } from "../../Interfaces/interface";
+import { useNavigate } from "react-router-dom";
+// import { getProductDetails } from "../../apis/apis";
 
-function ProductCard({product}: ProductCardProps) {
-  console.log(product?.Images[0].Image, "ccccccc");
+function ProductCard({ product }: ProductCardProps) {
+  const navigate = useNavigate();
+  const handleProductClick = (id: number) => {
+    navigate(`/productdetails/${id}`);
+  };
 
   return (
     <>
       <Box
+        onClick={()=>handleProductClick(product.id)}
         sx={{
           width: "293px",
           height: "420px",
@@ -16,7 +22,7 @@ function ProductCard({product}: ProductCardProps) {
           flexDirection: "column",
           alignItems: "center",
           borderRadius: "9px",
-          cursor:"pointer"
+          cursor: "pointer",
         }}
       >
         <Box
@@ -45,7 +51,11 @@ function ProductCard({product}: ProductCardProps) {
             justifyContent: "center",
           }}
         >
-          <img style={{width:"100%",height:"170px"}} src={product?.Images[0].Image} alt="" />
+          <img
+            style={{ width: "100%", height: "170px" }}
+            src={product?.Images[0].Image}
+            alt=""
+          />
           {/* <img style={{}} src="/public/iphone 14 pro 1.png" alt="" /> */}
         </Box>
         <Box

@@ -9,12 +9,11 @@ function HomeBody() {
   useEffect(() => {
     async function getProducts() {
       const response = await getAllProducts();
-      console.log(response.data, "3333");
       setProducts(response.data);
     }
     getProducts();
   }, []);
-  console.log(products, "ppppp");
+  // console.log(products, "ppppp");
 
   return (
     <>

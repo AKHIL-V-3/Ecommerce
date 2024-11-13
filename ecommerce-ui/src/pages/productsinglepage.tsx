@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../components/header/header";
 import { Box, Button, TextField } from "@mui/material";
 import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutlined";
@@ -6,10 +6,48 @@ import StarIcon from "@mui/icons-material/Star";
 import LinearProgress from "@mui/material/LinearProgress";
 import ReviewPost from "../components/reviewPost/reviewpost";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import ProductCard from "../components/productCard/ProductCard";
+// import ProductCard from "../components/productCard/ProductCard";
 import Footer from "../components/footer/footer";
+import { getProductDetails } from "../apis/apis";
+import { useParams } from "react-router-dom";
+import { IProduct, ProductImages } from "../Interfaces/interface";
 
 function ProductSinglePage() {
+  const [product, setProduct] = useState<IProduct | null>(null);
+  const [mainImage, setMainImage] = useState("");
+  const [activeImage, setActiveImage] = useState<string | null>(null);
+
+  const { id } = useParams<{ id: string | undefined }>();
+
+  useEffect(() => {
+    if (product && product?.Images.length > 0) {
+      setMainImage(product?.Images[0]?.Image);
+    }
+  }, [product]);
+
+  useEffect(() => {
+    if (id) {
+      const productId = parseInt(id);
+      if (!isNaN(productId)) {
+        const fetchProductDetails = async () => {
+          const response = await getProductDetails(productId);
+          setProduct(response.data)
+        };
+  
+        fetchProductDetails();
+      } else {
+        console.error("Invalid product ID");
+      }
+    } else {
+      console.error("Product ID is undefined");
+    }
+  }, [id]);
+
+  const changeImage = (imageUrl: string) => {
+    setMainImage(imageUrl);
+    setActiveImage(imageUrl);
+  };
+
   return (
     <>
       <Header />
@@ -62,7 +100,7 @@ function ProductSinglePage() {
               width: "50%",
               height: "100%",
               display: "flex",
-              alignItems: "center",
+              // alignItems: "center",
             }}
           >
             <Box
@@ -73,63 +111,34 @@ function ProductSinglePage() {
                 flexDirection: "column",
                 gap: "10px",
                 marginTop: "10px",
+                cursor: "pointer",
               }}
             >
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <img
-                  style={{ width: "70%" }}
-                  src="public/iphone 14.png"
-                  alt=""
-                />
-              </Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  //   opacity: "0.5",
-                }}
-              >
-                <img
-                  style={{ width: "43%" }}
-                  src="public/iphone 14 1.png"
-                  alt=""
-                />
-              </Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  //   opacity: "0.5",
-                }}
-              >
-                <img
-                  style={{ width: "43%" }}
-                  src="public/iphone 14 2.png"
-                  alt=""
-                />
-              </Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  //   opacity: "0.5",
-                }}
-              >
-                <img
-                  style={{ width: "43%" }}
-                  src="public/iphone 14 3.png"
-                  alt=""
-                />
-              </Box>
+              {product?.Images?.map((productImage:ProductImages) => (
+                <Box
+                  onClick={() => changeImage(productImage.Image)}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    transition: "transform 0.3s, opacity 0.3s",
+                  }}
+                >
+                  <img
+                    style={{
+                      width: "85%",
+                      transform:
+                        activeImage === productImage?.Image
+                          ? "scale(1.2)"
+                          : "scale(1)", // Zoom in the clicked image
+                      opacity: activeImage === productImage?.Image ? 1 : 0.6, // Reduce opacity of other images
+                      transition: "transform 0.3s, opacity 0.3s",
+                    }}
+                    src={productImage.Image}
+                    alt=""
+                  />
+                </Box>
+              ))}
             </Box>
             <Box
               sx={{
@@ -140,8 +149,8 @@ function ProductSinglePage() {
               }}
             >
               <img
-                style={{ width: "90%", height: "500px" }}
-                src="public/iphone 14.png"
+                style={{ width: "100%", height: "500px" }}
+                src={mainImage}
                 alt=""
               />
             </Box>
@@ -157,7 +166,7 @@ function ProductSinglePage() {
               marginLeft: "20px",
             }}
           >
-            <h1 style={{ fontSize: "43px" }}>Apple iPhone 14 Pro Max</h1>
+            <h1 style={{ fontSize: "43px" }}>{product?.Productname}</h1>
             <Box
               sx={{
                 display: "flex",
@@ -166,9 +175,9 @@ function ProductSinglePage() {
                 fontSize: "20px",
               }}
             >
-              <h2>$1399</h2>{" "}
+              <h2>₹{product?.Price}</h2>{" "}
               <h3 style={{ opacity: "0.7", fontSize: "20px" }}>
-                <s>$1499</s>{" "}
+                <s>₹120,000</s>{" "}
               </h3>
             </Box>
             <Box
@@ -685,7 +694,7 @@ function ProductSinglePage() {
           display: "flex",
           justifyContent: "center",
           marginTop: "100px",
-          marginBottom:"100px"
+          marginBottom: "100px",
         }}
       >
         <Box
@@ -699,20 +708,21 @@ function ProductSinglePage() {
           </Box>
 
           <Box
-           sx={{
-             display:"flex",
-             gap:"20px",
-             marginTop:"40px"
-           }}
+            sx={{
+              display: "flex",
+              gap: "20px",
+              marginTop: "40px",
+            }}
           >
+            {/* <ProductCard />
             <ProductCard />
             <ProductCard />
             <ProductCard />
-            <ProductCard />
+             */}
           </Box>
         </Box>
       </Box>
-      <Footer/>
+      <Footer />
     </>
   );
 }

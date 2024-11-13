@@ -5,6 +5,7 @@ import SignInPage from "./pages/signinpage";
 import Textfieldtest from "./pages/textfieldtest";
 import SignUpPage from "./pages/signuppage";
 import ProductSinglePage from "./pages/productsinglepage";
+import ScrollTop from "./components/common/scrollTop";
 
 const router = createBrowserRouter([
   {
@@ -20,8 +21,12 @@ const router = createBrowserRouter([
     element: <SignUpPage />,
   },
   {
-    path: "/productdetails",
-    element: <ProductSinglePage />,
+    path: "/productdetails/:id",
+    element: (
+      <ScrollTop>
+        <ProductSinglePage />
+      </ScrollTop>
+    ),
   },
   {
     path: "/test",
